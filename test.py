@@ -1,4 +1,7 @@
 import yfinance as yf
 
 msft = yf.Ticker("MSFT")
-print(msft.actions)
+
+file = open("./source_files/nasdaqlisted.txt")
+print(file.readline())
+

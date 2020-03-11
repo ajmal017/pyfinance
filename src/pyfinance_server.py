@@ -1,6 +1,7 @@
 from flask import Flask
 import yfinance as yf
 from pandas import Timestamp
+import json
 
 app = Flask(__name__)
 
@@ -12,62 +13,52 @@ def info(ticker):
 
 @app.route("/tickers/<string:ticker>/institutional-holders")
 def institutional_holders(ticker):
-    response = yf.Ticker(ticker).institutional_holders
-    return response.to_json()
+    return yf.Ticker(ticker).institutional_holders.to_json()
 
 
 @app.route("/tickers/<string:ticker>/actions")
 def actions(ticker):
-    response = yf.Ticker(ticker).actions
-    return response.to_json()
+    return yf.Ticker(ticker).actions.to_json()
 
 
 @app.route("/tickers/<string:ticker>/dividends")
 def dividends(ticker):
-    response = yf.Ticker(ticker).dividends
-    return response.to_json()
+    return yf.Ticker(ticker).dividends.to_json()
 
 
 @app.route("/tickers/<string:ticker>/splits")
 def splits(ticker):
-    response = yf.Ticker(ticker).splits
-    return response.to_json()
+    return yf.Ticker(ticker).splits.to_json()
 
 
 @app.route("/tickers/<string:ticker>/major-holders")
 def major_holders(ticker):
-    response = yf.Ticker(ticker).major_holders
-    return response.to_json()
+    return yf.Ticker(ticker).major_holders.to_json()
 
 
 @app.route("/tickers/<string:ticker>/cashflow")
 def cashflow(ticker):
-    response = yf.Ticker(ticker).cashflow
-    return response.to_json()
+    return yf.Ticker(ticker).cashflow.to_json()
 
 
 @app.route("/tickers/<string:ticker>/quarterly-cashflow")
 def quarterly_cashflow(ticker):
-    response = yf.Ticker(ticker).quarterly_cashflow
-    return response.to_json()
+    return yf.Ticker(ticker).quarterly_cashflow.to_json()
 
 
 @app.route("/tickers/<string:ticker>/earnings")
 def earnings(ticker):
-    response = yf.Ticker(ticker).earnings
-    return response.to_json()
+    return yf.Ticker(ticker).earnings.to_json()
 
 
 @app.route("/tickers/<string:ticker>/quarterly-earnings")
 def quarterly_earnings(ticker):
-    response = yf.Ticker(ticker).quarterly_earnings
-    return response.to_json()
+    return yf.Ticker(ticker).quarterly_earnings.to_json()
 
 
 @app.route("/tickers/<string:ticker>/sustainability")
 def sustainability(ticker):
-    response = yf.Ticker(ticker).sustainability
-    return response.to_json()
+    return yf.Ticker(ticker).sustainability.to_json()
 
 
 @app.route("/tickers/<string:ticker>/recommendations")
@@ -79,20 +70,22 @@ def recommendations(ticker):
 
 @app.route("/tickers/<string:ticker>/calendar")
 def calendar(ticker):
-    response = yf.Ticker(ticker).calendar
-    return response.to_json()
+    return yf.Ticker(ticker).calendar.to_json()
 
 
 @app.route("/tickers/<string:ticker>/isin")
 def isin(ticker):
-    response = {"isin": yf.Ticker(ticker).isin}
-    return response
+    return json.dumps({"isin": yf.Ticker(ticker).isin})
 
 
 @app.route("/tickers/<string:ticker>/options")
 def options(ticker):
-    response = {"options": list(yf.Ticker(ticker).options)}
-    return response
+    return json.dumps({"options": list(yf.Ticker(ticker).options)})
+
+
+@app.route("/tickers/")
+def all_tickers():
+    return yf.Tickers('msft aapl').to_json()
 
 
 def converter(obj):

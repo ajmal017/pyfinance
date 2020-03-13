@@ -93,11 +93,12 @@ def options(ticker):
 def all_tickers():
     def run(t):
         try:
-            yf.Ticker(t).to_json()
+            return yf.Ticker(t).to_dict()
         except HTTPError:
             pass
 
     num_cores = multiprocessing.cpu_count()
+    # response = Parallel(n_jobs=num_cores)(delayed(run)(t) for t in tqdm(['msft']))
     response = Parallel(n_jobs=num_cores)(delayed(run)(t) for t in tqdm(get_tickers()))
 
     return json.dumps({"stocks": response})

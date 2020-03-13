@@ -2,6 +2,12 @@ from flask import Flask
 import yfinance as yf
 from pandas import Timestamp
 import json
+from tqdm import tqdm
+from urllib.error import HTTPError
+import multiprocessing
+from joblib import Parallel, delayed
+from helpers import get_tickers
+
 
 app = Flask(__name__)
 
@@ -85,7 +91,16 @@ def options(ticker):
 
 @app.route("/tickers/")
 def all_tickers():
-    return yf.Tickers('msft aapl').to_json()
+    def run(t):
+        try:
+            yf.Ticker(t).to_json()
+        except HTTPError:
+            pass
+
+    num_cores = multiprocessing.cpu_count()
+    response = Parallel(n_jobs=num_cores)(delayed(run)(t) for t in tqdm(get_tickers()))
+
+    return json.dumps({"stocks": response})
 
 
 def converter(obj):

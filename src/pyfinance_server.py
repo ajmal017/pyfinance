@@ -98,7 +98,6 @@ def all_tickers():
             pass
 
     num_cores = multiprocessing.cpu_count()
-    # response = Parallel(n_jobs=num_cores)(delayed(run)(t) for t in tqdm(['msft']))
     response = Parallel(n_jobs=num_cores)(delayed(run)(t) for t in tqdm(get_tickers()))
 
     return json.dumps({"stocks": response})

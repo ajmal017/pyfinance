@@ -6,8 +6,10 @@ from pyfinance_server import app
 class TestEndpointsResponseCodes(unittest.TestCase):
     def test_info(self):
         response = app.test_client().get('/tickers/msft/info')
-        json.loads(response.data)
+        info = json.loads(response.data)
         self.assertEqual(response.status, '200 OK')
+        self.assertIsNotNone(info)
+        self.assertIsNotNone(info['trailingPE'])
 
     def test_institutional_holders(self):
         response = app.test_client().get('/tickers/msft/institutional-holders')
@@ -85,6 +87,15 @@ class TestEndpointsResponseCodes(unittest.TestCase):
 
     def test_all(self):
         response = app.test_client().get('/tickers/')
+        stocks_dict = json.loads(response.data)
+        self.assertEqual(response.status, '200 OK')
+        self.assertIsNotNone(stocks_dict['stocks'])
+        self.assertIsNotNone(stocks_dict['stocks']['AAL'])
+        self.assertIsNotNone(stocks_dict['stocks']['AAL']['info'])
+        self.assertIsNotNone(stocks_dict['stocks']['AAL']['info']['trailingPE'])
+
+    def test_trailing_pe(self):
+        response = app.test_client().get('/tickers/trailing-pe')
         json.loads(response.data)
         self.assertEqual(response.status, '200 OK')
 

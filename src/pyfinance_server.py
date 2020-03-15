@@ -99,8 +99,30 @@ def all_tickers():
 
     num_cores = multiprocessing.cpu_count()
     response = Parallel(n_jobs=num_cores)(delayed(run)(t) for t in tqdm(get_tickers()))
+    new_dict = {}
+    for item in response:
+        key = item['info']['symbol']
+        new_dict[key] = item
+    return json.dumps({"stocks": new_dict})
 
-    return json.dumps({"stocks": response})
+
+@app.route("/tickers/trailing-pe")
+def trailing_pe_sorted():
+    def the_key(x):
+        try:
+            return stocks[x]['info']['trailingPE']
+        except KeyError:
+            return 99999
+
+    stocks = json.loads(all_tickers())['stocks']
+    sorted_stocks = {}
+    for ticker in sorted(stocks.keys(), key=the_key):
+        try:
+            sorted_stocks[ticker] = stocks[ticker]['info']['trailingPE']
+        except KeyError:
+            pass
+    return json.dumps({"stocks": sorted_stocks})
+
 
 
 def converter(obj):

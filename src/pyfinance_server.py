@@ -118,9 +118,25 @@ def trailing_pe_sorted():
     sorted_stocks = {}
     for ticker in sorted(stocks.keys(), key=the_key):
         try:
-            sorted_stocks[ticker] = stocks[ticker]['info']['trailingPE']
-        except KeyError:
-            pass
+            info = stocks[ticker]['info']
+            sorted_stocks[ticker] = {
+                'short_name': info['shortName'],
+                'trailing_pe': info['trailingPE'],
+                'forward_pe': info['forwardPE'],
+                'two_hundred_day_average': info['twoHundredDayAverage'],
+                'fifty_day_average': info['fiftyDayAverage'],
+                'fifty_two_week_low': info['fiftyTwoWeekLow'],
+                'fifty_two_week_high': info['fiftyTwoWeekHigh'],
+                'fifty_two_week_change': info['52WeekChange'],
+                'price_to_sales_trailing_12_months': info['priceToSalesTrailing12Months'],
+                'profit_margin': info['profitMargins'],
+                'trailing_eps': info['trailingEps'],
+                'forward_eps': info['forwardEps'],
+                'held_percent_insiders': info['heldPercentInsiders']
+
+            }
+        except KeyError as e:
+            print(e)
     return json.dumps({"stocks": sorted_stocks})
 
 

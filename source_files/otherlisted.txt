@@ -1927,7 +1927,7 @@ GDMA|GadsdenA DynamicA Multi-AssetA ETF|P|GDMA|Y|100|N|GDMA|N
 GDNA|Goldman Sachs Motif Human Evolution ETF|P|GDNA|Y|100|N|GDNA|N
 GDO|Western Asset Global Corporate Defined Opportunity Fund Inc. Western Asset Global Corporate Defined Opportunity Fund Inc.|N|GDO|N|100|N|GDO|N
 GDOT|Green Dot Corporation Class A Common Stock, $0.001 par value|N|GDOT|N|100|N|GDOT|N
-GDP|Goodrich Petroleum Corporation Common Stock|A|GDP|N|100|N|GDP|Y
+GDP|Goodrich Petroleum Corporation Common Stock|A|GDP|N|100|N|GDP|N
 GDV|Gabelli Dividend & Income Trust Common Shares of Beneficial Interest|N|GDV|N|100|N|GDV|N
 GDV$A|Gabelli Dividend & Income Tr Preferred Series A|N|GDVpA|N|100|N|GDV-A|N
 GDV$G|Gabelli Dividend 5.25% Series G Cumulative Preferred Shares, par value $0.001 per share|N|GDVpG|N|100|N|GDV-G|N

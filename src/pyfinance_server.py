@@ -121,6 +121,7 @@ def trailing_pe_sorted():
             info = stocks[ticker]['info']
             sorted_stocks[ticker] = {
                 'short_name': info['shortName'],
+                'regular_market_price': info['regularMarketPrice'],
                 'trailing_pe': info['trailingPE'],
                 'forward_pe': info['forwardPE'],
                 'two_hundred_day_average': info['twoHundredDayAverage'],

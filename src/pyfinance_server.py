@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import yfinance as yf
 from pandas import Timestamp
 import json
@@ -106,11 +106,14 @@ def all_tickers():
     return json.dumps({"stocks": new_dict})
 
 
-@app.route("/tickers/trailing-pe")
+@app.route("/tickers/sort")
 def trailing_pe_sorted():
+    sort_by = request.args.get('sort-by')
+
     def the_key(x):
         try:
-            return stocks[x]['info']['trailingPE']
+            value = stocks[x]['info'][sort_by]
+            return float(value) if value is not None else 9999
         except KeyError:
             return 99999
 

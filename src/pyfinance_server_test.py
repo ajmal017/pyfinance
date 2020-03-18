@@ -95,7 +95,7 @@ class TestEndpointsResponseCodes(unittest.TestCase):
         self.assertIsNotNone(stocks_dict['stocks']['AAL']['info']['trailingPE'])
 
     def test_trailing_pe(self):
-        response = app.test_client().get('/tickers/trailing-pe')
+        response = app.test_client().get('/tickers/sort?sort-by=forwardPE')
         json.loads(response.data)
         self.assertEqual(response.status, '200 OK')
 
